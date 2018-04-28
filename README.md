@@ -1,1 +1,1 @@
-# js-web-scraper
+# JavaScript web scraper <br>
