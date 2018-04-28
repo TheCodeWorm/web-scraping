@@ -2,7 +2,7 @@
 let request = require('request');0
 let cheerio = require('cheerio');
 
-request('https://www.blueletterbible.org/nkjv/'rom/14', function(err, resp, html) {
+request('https://www.blueletterbible.org/nkjv/rom/14', function(err, resp, html) {
 	if (!err){
 	  let $ = cheerio.load(html);
 		$('div.tools').each(function(i, element){
