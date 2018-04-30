@@ -1,3 +1,5 @@
+// Noel Caceres
+// a script to web scrape and format bible verses for pro presenter
 
 let request = require('request');
 let cheerio = require('cheerio');
