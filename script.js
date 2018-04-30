@@ -1,5 +1,5 @@
 
-let request = require('request');0
+let request = require('request');
 let cheerio = require('cheerio');
 
 request('https://www.blueletterbible.org/nkjv/rom/14', function(err, resp, html) {
