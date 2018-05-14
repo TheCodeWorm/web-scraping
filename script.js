@@ -1,11 +1,12 @@
 // Noel Caceres
 // a script to web scrape and format bible verses for pro presenter
 
-let request = require('request');
-let cheerio = require('cheerio');
+//let request = require('request');
+//let cheerio = require('cheerio');
 
 let myUrl = 'https://www.blueletterbible.org/nkjv/rom/14';
-request(myUrl, function(err, resp, html) {
+let myreq = request(myUrl, function(err, resp, html) {
+	let arr = [];
 	if (!err){
 	  let $ = cheerio.load(html);
 		$('div.tools').each(function(i, element){
@@ -33,9 +34,11 @@ request(myUrl, function(err, resp, html) {
 				tmpStr += arr[i] + ' ';
 				strLen += 1;
 	    }
-   		passage = tmpStr;
-			console.log('\n' + verse + '\n' + passage);
+   		passage = '\n' + verse + '\n' + tmpStr;
+			console.log(passage);
+			arr.push(passage);
     });
   }
+  return arr;
 });
 
