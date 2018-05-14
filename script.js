@@ -5,6 +5,7 @@ let request = require('request');
 let cheerio = require('cheerio');
 
 let myUrl = 'https://www.blueletterbible.org/nkjv/rom/14';
+
 let myreq = request(myUrl, function(err, resp, html) {
 	let arr = [];
 	if (!err){
