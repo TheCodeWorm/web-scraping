@@ -1,5 +1,24 @@
 // Noel Caceres
-// a script to web scrape and format bible verses for pro presenter
+// a script to web scrape and format bible verses 
+import React, { Component } from 'react';
+//import ReactDOM from 'react-dom';
+//import './scraper.css';
+//import App from './App';
+
+class Scraper extends Component {
+  render() {
+    return (
+      <div>
+        <p>
+          testing Scraper
+        </p>
+      </div>
+    );
+  }
+}
+
+export default Scraper;
+
 
 let request = require('request');
 let cheerio = require('cheerio');
@@ -42,4 +61,3 @@ let myreq = request(myUrl, function(err, resp, html) {
   }
   return arr;
 });
-
