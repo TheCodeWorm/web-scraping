@@ -46,9 +46,12 @@ function scraper() {
 	    });
 	    //console.log(allVerses);
 	    versesParagraph.appendChild(document.createTextNode(allVerses));
+	    //return versesParagraph;
 	  }
 	})
 }
+
+scraper();
 
 class Scraper extends Component {
   render() {
