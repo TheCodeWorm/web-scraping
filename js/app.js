@@ -86,11 +86,9 @@ jQuery(function ($) {
 			if (e.which !== ENTER_KEY || !val) {
 				return;
 			}
-      //console.log(val);
-      let book = "rom";
-			let chapter = "14";
-			let toSearchFor = '<a href="/nkjv/' + book + '/' + chapter;
-			console.log("Results: ", getVerses(toSearchFor));
+
+			let searchFor = val.split(" ");
+			setPassageLines(searchFor[0], searchFor[1]);
 			this.todos.splice(0,1);
 
 			this.todos.push({
@@ -100,7 +98,7 @@ jQuery(function ($) {
 			});
 
 			$input.val('');
-
+			console.log()
 			this.render();
 		}, 
 		editKeyup: function (e) {
@@ -133,11 +131,12 @@ jQuery(function ($) {
 	App.init();
 });
 
-const myProxy = 'https://cors-anywhere.herokuapp.com/';
-const myURL = 'https://cors-anywhere.herokuapp.com/https://www.blueletterbible.org/nkjv/rom/14/1/';
+//
+function setPassageLines(book, chapter) {  // verse, passage... Ex: rom 14
+	const myProxy = 'https://cors-anywhere.herokuapp.com/';
+  const myURL = 'https://www.blueletterbible.org/nkjv/' + book + '/' + chapter;
 
-let getVerses = (toSearchFor) => {
-	console.log(fetch(myProxy + myURL).then(function(res) {
+	fetch(myProxy + myURL).then(function(res) {
 		return res.text();  // convert to text
 	}).then(function(html) {
 
@@ -147,6 +146,7 @@ let getVerses = (toSearchFor) => {
 	  let resultsForVerses = html.match(/<(.*)>/g);
 
 	  // search results for verses
+	  let toSearchFor = '<a href="/nkjv/' + book + '/' + chapter;
 	  for( let i=0; i< resultsForVerses.length; i++) {
 	  	if (resultsForVerses[i].includes(toSearchFor)) {
 	  		verses.push(resultsForVerses[i].match(/(>).+?(?=<)/)[0].replace('>', ''));
@@ -172,7 +172,27 @@ let getVerses = (toSearchFor) => {
 			passages.push(resultsForPassages[i].replace("&#8217;", "'").replace("[fn]", ""));
 			//console.log(passages[i]);
 		}
-	}));
+    
+		console.log("test 1:");
+		console.log(verses);
+		console.log('test 2.....');
+
+		var passageLines = document.getElementById("passage-lines");
+		
+		while (passageLines.firstChild) {
+      passageLines.removeChild(passageLines.firstChild);
+    }
+		
+		for (let i=0; i < verses.length; i++) {
+			
+			var p = document.createElement("p");
+			var t = document.createTextNode(verses[i]);
+			p.appendChild(t);
+			passageLines = document.getElementById("passage-lines");
+			passageLines.appendChild(p);
+		}
+		console.log(passageLines);
+	});
 
 	// remove everything inside brackets, including brackets
 	function removeBrackets(str) {

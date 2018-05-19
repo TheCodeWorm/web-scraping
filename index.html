@@ -2,7 +2,7 @@
 <html lang="en" data-framework="jquery">
 	<head>
 		<meta charset="utf-8">
-		<title>jQuery • TodoMVC</title>
+		<title>Get Verses</title>
 		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
 		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
 		<link rel="stylesheet" href="css/app.css">
@@ -10,21 +10,20 @@
 	<body>
 		<section class="todoapp">
 			<header class="header">
-				<h1>todos</h1>
-				<input class="new-todo" placeholder="What needs to be done?" autofocus>
+				<h1>NKJV</h1>
+				<input class="new-todo" placeholder=" Rom 14" autofocus>
 			</header>
 			<section class="main">
 				<input id="toggle-all" class="toggle-all" type="checkbox">
 				<label for="toggle-all">Mark all as complete</label>
 				<ul class="todo-list"></ul>
 			</section>
-			<footer class="footer"></footer>
+			<footer class="footer" style="margin: 0px; padding:0px; height:0px"></footer>
 		</section>
-		<footer class="info">
-			<p>Double-click to edit a todo</p>
-			<p>Created by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
-			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		<footer class="info" style="margin: 0px; padding:0px; height:0px">
 		</footer>
+		<div id= "passage-lines" style="text-align:center">
+		</div>
 		<script id="todo-template" type="text/x-handlebars-template">
 			{{#this}}
 			<li {{#if completed}}class="completed"{{/if}} data-id="{{id}}">
