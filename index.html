@@ -2,27 +2,28 @@
 <html lang="en" data-framework="jquery">
 	<head>
 		<meta charset="utf-8">
-		<title>NKJV</title>
-		<link id="favicon" rel="icon" href="https://hyperdev.com/favicon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="css/base.css">
-		<link rel="stylesheet" href="css/index.css">
+		<title>jQuery • TodoMVC</title>
+		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
 		<link rel="stylesheet" href="css/app.css">
 	</head>
 	<body>
-		<section id="todoapp">
-			<header id="header">
-				<h1>NKJV</h1>
-				<input id="new-todo" placeholder=" Rom 14" autofocus>
+		<section class="todoapp">
+			<header class="header">
+				<h1>todos</h1>
+				<input class="new-todo" placeholder="What needs to be done?" autofocus>
 			</header>
-			<section id="main">
-				<input id="toggle-all" type="checkbox">
+			<section class="main">
+				<input id="toggle-all" class="toggle-all" type="checkbox">
 				<label for="toggle-all">Mark all as complete</label>
-				<ul id="todo-list"></ul>
+				<ul class="todo-list"></ul>
 			</section>
-			<footer id="footer"></footer>
+			<footer class="footer"></footer>
 		</section>
-		<footer id="info">
-			<p>message here... </p>
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+			<p>Created by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 		</footer>
 		<script id="todo-template" type="text/x-handlebars-template">
 			{{#this}}
@@ -37,10 +38,9 @@
 		{{/this}}
 		</script>
 		<script id="footer-template" type="text/x-handlebars-template">
-			<span id="todo-count"><strong>{{activeTodoCount}}</strong> {{activeTodoWord}} left</span>
-			<ul id="filters">
+			<span class="todo-count"><strong>{{activeTodoCount}}</strong> {{activeTodoWord}} left</span>
+			<ul class="filters">
 				<li>
-          <!-- The :eq() selector selects an element with a specific index number. -->
 					<a {{#eq filter 'all'}}class="selected"{{/eq}} href="#/all">All</a>
 				</li>
 				<li>
@@ -50,11 +50,12 @@
 					<a {{#eq filter 'completed'}}class="selected"{{/eq}}href="#/completed">Completed</a>
 				</li>
 			</ul>
-			{{#if completedTodos}}<button id="clear-completed">Clear completed</button>{{/if}}
+			{{#if completedTodos}}<button class="clear-completed">Clear completed</button>{{/if}}
 		</script>
-		<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+		<script src="node_modules/todomvc-common/base.js"></script>
+		<script src="node_modules/jquery/dist/jquery.js"></script>
+		<script src="node_modules/handlebars/dist/handlebars.js"></script>
+		<script src="node_modules/director/build/director.js"></script>
 		<script src="js/app.js"></script>
-		<script src="./js/script.js"></script>
 	</body>
 </html>
