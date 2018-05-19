@@ -1,3 +1,5 @@
+
+
 /*global jQuery, Handlebars, Router */
 jQuery(function ($) {
 	'use strict';
@@ -23,10 +25,7 @@ jQuery(function ($) {
 			}
 
 			return uuid;
-		},
-		pluralize: function (count, word) {
-			return count === 1 ? word : word + 's';
-		},
+		}, 
 		store: function (namespace, data) {
 			if (arguments.length > 1) {
 				return localStorage.setItem(namespace, JSON.stringify(data));
@@ -87,7 +86,11 @@ jQuery(function ($) {
 			if (e.which !== ENTER_KEY || !val) {
 				return;
 			}
-      console.log(val);
+      //console.log(val);
+      let book = "rom";
+			let chapter = "14";
+			let toSearchFor = '<a href="/nkjv/' + book + '/' + chapter;
+			console.log("Results: ", getVerses(toSearchFor));
 			this.todos.splice(0,1);
 
 			this.todos.push({
@@ -129,3 +132,63 @@ jQuery(function ($) {
 
 	App.init();
 });
+
+const myProxy = 'https://cors-anywhere.herokuapp.com/';
+const myURL = 'https://cors-anywhere.herokuapp.com/https://www.blueletterbible.org/nkjv/rom/14/1/';
+
+let getVerses = (toSearchFor) => {
+	console.log(fetch(myProxy + myURL).then(function(res) {
+		return res.text();  // convert to text
+	}).then(function(html) {
+
+	  ////// Get verses from html:
+		let verses = [];  	// array for final extracted verses
+		// get results from html, to begin extacting verses, Ex: Rom 14:1
+	  let resultsForVerses = html.match(/<(.*)>/g);
+
+	  // search results for verses
+	  for( let i=0; i< resultsForVerses.length; i++) {
+	  	if (resultsForVerses[i].includes(toSearchFor)) {
+	  		verses.push(resultsForVerses[i].match(/(>).+?(?=<)/)[0].replace('>', ''));
+	  	}
+		}
+
+		/*
+		for( let i=0; i< verses.length; i++) {
+	  	console.log(verses[i]);
+	  }
+	  */
+
+	  ////// Get passages from html:
+	  let passages = [];  // array for final extracted passages
+		// get results from html, for the passages of verses, 
+		// Ex: Receive one who is weak in the faith, but not to disputes over doubtful things.
+		let resultsForPassages = html.match(/hide-for-tablet"> - <\/span>(.*)(<\/div><\/div>)/g);
+		
+		for( let i=0; i< resultsForPassages.length; i++) {
+			resultsForPassages[i] = resultsForPassages[i].match(/(?<=\/span>)(.*)(?=<\/div><\/div>)/g)[0];
+			resultsForPassages[i] = removeBrackets(resultsForPassages[i]);
+			resultsForPassages[i] = resultsForPassages[i].replace("&#8220;", '"').replace("&#8221;", '"');
+			passages.push(resultsForPassages[i].replace("&#8217;", "'").replace("[fn]", ""));
+			//console.log(passages[i]);
+		}
+	}));
+
+	// remove everything inside brackets, including brackets
+	function removeBrackets(str) {
+		let result = "";
+		let isInBracket = false   // if in bracket, including bracket
+	  for (let i=0; i < str.length; i++) {
+	  	if (str[i] === '<') {
+	  		isInBracket = true;
+	  	}
+	  	else if (str[i] === '>') {
+	  		isInBracket = false;
+	  	}
+	    else if (isInBracket === false) {
+	    	result +=  str[i];
+	    }
+	  }
+	  return result;
+	}
+}
