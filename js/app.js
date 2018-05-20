@@ -178,7 +178,7 @@ function setPassageLines(book, chapter) {  // verse, passage... Ex: rom 14
 		console.log('test 2.....');
 
 		var passageLines = document.getElementById("passage-lines");
-		
+
 		while (passageLines.firstChild) {
       passageLines.removeChild(passageLines.firstChild);
     }
@@ -187,6 +187,12 @@ function setPassageLines(book, chapter) {  // verse, passage... Ex: rom 14
 			
 			var p = document.createElement("p");
 			var t = document.createTextNode(verses[i]);
+			p.appendChild(t);
+			passageLines = document.getElementById("passage-lines");
+			passageLines.appendChild(p);
+
+			var p = document.createElement("p");
+			var t = document.createTextNode(passages[i]);
 			p.appendChild(t);
 			passageLines = document.getElementById("passage-lines");
 			passageLines.appendChild(p);
