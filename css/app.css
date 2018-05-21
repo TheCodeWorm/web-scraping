@@ -1,4 +1,9 @@
 #main,
-#footer {
-	display: none;
+p {
+	padding: 0px;
+	margin: 0px;
+}
+
+.todoapp {
+	margin: 30px;
 }

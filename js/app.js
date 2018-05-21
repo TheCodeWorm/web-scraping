@@ -1,5 +1,3 @@
-
-
 /*global jQuery, Handlebars, Router */
 jQuery(function ($) {
 	'use strict';
@@ -25,7 +23,7 @@ jQuery(function ($) {
 			}
 
 			return uuid;
-		}, 
+		},
 		store: function (namespace, data) {
 			if (arguments.length > 1) {
 				return localStorage.setItem(namespace, JSON.stringify(data));
@@ -39,7 +37,6 @@ jQuery(function ($) {
 	var App = {
 		init: function () {
 			this.todos = util.store('todos-jquery');
-			this.todoTemplate = Handlebars.compile($('#todo-template').html());
 			this.bindEvents();
 
 			new Router({
@@ -61,27 +58,16 @@ jQuery(function ($) {
 			if (this.filter === 'active') {
 				return this.getActiveTodos();
 			}
-      
+
 			if (this.filter === 'completed') {
 				return this.getCompletedTodos();
 			}
-      
+
 			return this.todos;
 		}, 
-		getIndexFromEl: function (el) {
-			var id = $(el).closest('li').data('id');
-			var todos = this.todos;
-			var i = todos.length;
-     
-			while (i--) {
-				if (todos[i].id === id) {
-					return i;
-				}
-			}
-		},
 		create: function (e) {
 			var $input = $(e.target);
-			var val = $input.val().trim();
+			var val = $input.val().trim().toLowerCase();
 
 			if (e.which !== ENTER_KEY || !val) {
 				return;
@@ -98,34 +84,9 @@ jQuery(function ($) {
 			});
 
 			$input.val('');
-			console.log()
-			this.render();
-		}, 
-		editKeyup: function (e) {
-			if (e.which === ENTER_KEY) {
-				e.target.blur();
-			}
-
-			if (e.which === ESCAPE_KEY) {
-				$(e.target).data('abort', true).blur();
-			}
-		}, 
-		update: function (e) {
-			var el = e.target;
-			var $el = $(el);
-			var val = $el.val().trim();
-			
-			if ($el.data('abort')) {
-				$el.data('abort', false);
-			} else if (!val) {
-				this.destroy(e);
-				return;
-			} else {
-				this.todos[this.getIndexFromEl(el)].title = val;
-			}
 
 			this.render();
-		}
+		}, 
 	};
 
 	App.init();
@@ -168,8 +129,8 @@ function setPassageLines(book, chapter) {  // verse, passage... Ex: rom 14
 		for( let i=0; i< resultsForPassages.length; i++) {
 			resultsForPassages[i] = resultsForPassages[i].match(/(?<=\/span>)(.*)(?=<\/div><\/div>)/g)[0];
 			resultsForPassages[i] = removeBrackets(resultsForPassages[i]);
-			resultsForPassages[i] = resultsForPassages[i].replace("&#8220;", '"').replace("&#8221;", '"');
-			passages.push(resultsForPassages[i].replace("&#8217;", "'").replace("[fn]", ""));
+			resultsForPassages[i] = resultsForPassages[i].replace("&#8220;", '"').replace("&#8221;", '"').replace("&#8216;", '');
+			passages.push(resultsForPassages[i].replace("&#8217;", "'").replace("[fn]", "").replace("&#8201;", ''));
 			//console.log(passages[i]);
 		}
     
@@ -197,6 +158,8 @@ function setPassageLines(book, chapter) {  // verse, passage... Ex: rom 14
 			passageLines = document.getElementById("passage-lines");
 			passageLines.appendChild(p);
 		}
+		// clear placeholder 
+		document.getElementById("myInput1").placeholder = "";
 		console.log(passageLines);
 	});
 
