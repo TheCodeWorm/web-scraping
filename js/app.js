@@ -19,26 +19,16 @@ jQuery(function ($) {
 
 	var App = {
 		init: function () {
-			this.todos = util.store('verses-jquery');
-			this.todoTemplate = Handlebars.compile($('#verses-template').html());
-			this.footerTemplate = Handlebars.compile($('#footer-template').html());
+			this.verses = util.store('verses-jquery');
 			this.bindEvents();
-
-			new Router({
-				'/:filter': function (filter) {
-					this.filter = filter;
-					this.render();
-				}.bind(this)
-			}).init('/all');
 		},
 		bindEvents: function () {
 			$('.new-verses').on('keyup', this.create.bind(this));
 		},
 		render: function () {
 			$('.new-verses').focus();
-			util.store('verses-jquery', this.todos);
+			util.store('verses-jquery', this.verses);
 		},
-
 		create: function (e) {
 			var $input = $(e.target);
 			var val = $input.val().trim();
@@ -47,11 +37,11 @@ jQuery(function ($) {
 				return;
 			}
 
-			this.todos = this.todos.splice(0, 0);
+			this.verses = this.verses.splice(0, 0);
 			let searchFor = val.split(" ");
 			setPassageLines(searchFor[0], searchFor[1]);
 
-			this.todos.push({
+			this.verses.push({
 				title: val
 			});
 
