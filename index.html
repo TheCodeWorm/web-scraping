@@ -8,9 +8,9 @@
 		<link rel="stylesheet" href="./css/app.css">
 	</head>
 	<body>
-		<section class="todoapp">
+		<section class="getverses">
 			<header class="header">
-				<input class="new-todo" id="myInput1" placeholder="Enter in this format:   eph 2" autofocus>
+				<input class="new-verses" id="myInput1" placeholder="Enter in this format:   eph 2" autofocus>
 			</header>
 			<section class="main">
 			</section>
@@ -20,30 +20,13 @@
 			<div id="passage-lines"></div>
 		</section>
 		
-		<script id="todo-template" type="text/x-handlebars-template">
+		<script id="verses-template" type="text/x-handlebars-template">
 			{{#this}}
-			<li {{#if completed}}class="completed"{{/if}} data-id="{{id}}">
-				<div class="view">
-					<input class="toggle" type="checkbox" {{#if completed}}checked{{/if}}>
-					<label>{{title}}</label>
-					<button class="destroy"></button>
-				</div>
-				<input class="edit" value="{{title}}">
-			</li>
-		{{/this}}
+		  {{/this}}
 		</script>
 		<script id="footer-template" type="text/x-handlebars-template">
-			<span class="todo-count"><strong>{{activeTodoCount}}</strong> {{activeTodoWord}} left</span>
 			<ul class="filters">
-				<li>
-					<a {{#eq filter 'all'}}class="selected"{{/eq}} href="#/all">All</a>
-				</li>
-				<li>
-					<a {{#eq filter 'active'}}class="selected"{{/eq}}href="#/active">Active</a>
-				</li>
-				<li>
-					<a {{#eq filter 'completed'}}class="selected"{{/eq}}href="#/completed">Completed</a>
-				</li>
+				
 			</ul>
 			{{#if completedTodos}}<button class="clear-completed">Clear completed</button>{{/if}}
 		</script>

@@ -41,7 +41,7 @@ jQuery(function ($) {
 	var App = {
 		init: function () {
 			this.todos = util.store('todos-jquery');
-			this.todoTemplate = Handlebars.compile($('#todo-template').html());
+			this.todoTemplate = Handlebars.compile($('#verses-template').html());
 			this.footerTemplate = Handlebars.compile($('#footer-template').html());
 			this.bindEvents();
 
@@ -53,14 +53,14 @@ jQuery(function ($) {
 			}).init('/all');
 		},
 		bindEvents: function () {
-			$('.new-todo').on('keyup', this.create.bind(this));
+			$('.new-verses').on('keyup', this.create.bind(this));
 			$('.toggle-all').on('change', this.toggleAll.bind(this));
 		},
 		render: function () {
 			var todos = this.getFilteredTodos();
 			$('.todo-list').html(this.todoTemplate(todos));
 			$('.main').toggle(todos.length > 0);
-			$('.new-todo').focus();
+			$('.new-verses').focus();
 			util.store('todos-jquery', this.todos);
 		},
 		renderFooter: function () {
