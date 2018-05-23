@@ -1,4 +1,5 @@
 
+
 jQuery(function ($) {
 	'use strict';
 
@@ -39,12 +40,49 @@ jQuery(function ($) {
 
 			this.verses = this.verses.splice(0, 0);
 			let searchFor = val.split(" ");
+
+			// for book of jude
+			if (searchFor[0] === "jud" || searchFor[0] === "jude") {
+				searchFor[0] = "jde";
+			}
+			// for book of ruth
+			else if (searchFor[0] === "rut" || searchFor[0] === "ruth") {
+				searchFor[0] = "rth";
+			}
+			// for song of solomon
+			else if (searchFor[0] === "son" || searchFor[0] === "song") {
+				searchFor[0] = "sng";
+			}
+			// for book of john
+			else if (searchFor[0] === "joh" || searchFor[0] === "john") {
+				searchFor[0] = "jhn";
+			}
+			// distinguish between philippians and philemon
+			else if (searchFor[0] === "phi" || searchFor[0] === "phil" 
+				|| searchFor[0] === "phili" || searchFor[0] === "philip") {
+
+				let result = prompt("Please choose: 1 or 2\n1 - philippians \n2 - philemon");
+			  if (result === "1")
+			  	searchFor[0] = "phl";
+			  else if (result === "2") {
+			  	searchFor[0] = "phm";
+			  }
+			}
+
+			// if there is no chapter given, default to chapter 1
+			if (searchFor.length === 1) {
+				searchFor.push("1");
+			}
+      
+      // fetch verses and set them
 			setPassageLines(searchFor[0], searchFor[1]);
 
 			this.verses.push({
-				title: val
+				chapter: searchFor[0], 
+        book: searchFor[1]
 			});
 
+			// reset
 			$input.val('');
 
 			this.render();
@@ -82,33 +120,42 @@ function setPassageLines(book, chapter) {  // verse, passage... Ex: rom 14
 		// Ex: Receive one who is weak in the faith, but not to disputes over doubtful things.
 		let resultsForPassages = html.match(/hide-for-tablet"> - <\/span>(.*)(<\/div><\/div>)/g);
 		
+		// parse to get passages
 		for( let i=0; i< resultsForPassages.length; i++) {
 			resultsForPassages[i] = resultsForPassages[i].match(/(?<=\/span>)(.*)(?=<\/div><\/div>)/g)[0];
 			resultsForPassages[i] = removeBrackets(resultsForPassages[i]);
 			resultsForPassages[i] = resultsForPassages[i].replace("&#8220;", '"').replace("&#8221;", '"').replace("&#8216;", '');
-			passages.push(resultsForPassages[i].replace("&#8217;", "'").replace("[fn]", "").replace("&#8201;", ''));
+			passages.push(resultsForPassages[i].replace("&#8217;", "'").replace("[fn]", "").replace("&#8201;", ""));
 		}
 
+		// get passage-lines to hold paragraph children for passages
 		var passageLines = document.getElementById("passage-lines");
 
+		// if there is a prev passage paragraphs, remove them
 		while (passageLines.firstChild) {
       passageLines.removeChild(passageLines.firstChild);
     }
 		
+		// set paragraphs 
 		for (let i=0; i < verses.length; i++) {
 			
+			// create a new paragraph
 			var p = document.createElement("p");
+			// new text with verse
 			var t = document.createTextNode(verses[i]);
 			p.appendChild(t);
 			passageLines = document.getElementById("passage-lines");
 			passageLines.appendChild(p);
 
+			// new paragraph 
 			var p = document.createElement("p");
+			// new text node for passages
 			var t = document.createTextNode(passages[i]);
 			p.appendChild(t);
 			passageLines = document.getElementById("passage-lines");
 			passageLines.appendChild(p);
 		}
+		
 		// clear placeholder 
 		document.getElementById("myInput1").placeholder = "";
 	});
