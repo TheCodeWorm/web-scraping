@@ -125,6 +125,7 @@ function setPassageLines(book, chapter) {  // verse, passage... Ex: rom 14
 			resultsForPassages[i] = resultsForPassages[i].match(/(?<=\/span>)(.*)(?=<\/div><\/div>)/g)[0];
 			resultsForPassages[i] = removeBrackets(resultsForPassages[i]);
 			resultsForPassages[i] = resultsForPassages[i].replace("&#8220;", '"').replace("&#8221;", '"').replace("&#8216;", '');
+			resultsForPassages[i] = resultsForPassages[i].replace("&#8212;", '"').replace("&#8220;", '"').replace("&#8221;", '"');
 			passages.push(resultsForPassages[i].replace("&#8217;", "'").replace("[fn]", "").replace("&#8201;", ""));
 		}
 
