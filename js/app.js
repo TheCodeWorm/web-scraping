@@ -41,6 +41,7 @@ jQuery(function ($) {
 			this.verses = this.verses.splice(0, 0);
 			let searchFor = val.split(" ");
 
+			// following are needed for jude, ruth, solomon, and john, philippians, and philemon
 			// for book of jude
 			if (searchFor[0] === "jud" || searchFor[0] === "jude") {
 				searchFor[0] = "jde";
